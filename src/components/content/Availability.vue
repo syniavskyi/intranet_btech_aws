@@ -138,8 +138,7 @@ export default {
         'app-leaves-tile': LeavesTile,
         'app-not-authorized-projects-tile': NotAuthProjectsTile
     },
-    computed: {
-        ...mapGetters({
+    computed: Object.assign(mapGetters({
             departmentList: 'getDepartmentList',
             branchList: 'getBranchList',
             usersList: 'usersList',
@@ -161,9 +160,8 @@ export default {
             userAvail: 'getUserAvail',
             authType: 'getAvailabilityAuth',
             authAcc: 'getAvailAcceptAuth',
-            permissionToEditAvail: "getPermissionToEditAvail",
-
-        }),
+            disabledBtnToEditAvail: "getDisabledBtnToEditAvail"
+        }), {
         filteredUsers() {
             let aFilteredUsers = this.usersList,
                 selectedDep = this.selectedDepartment,
@@ -210,51 +208,119 @@ export default {
                 },
                 customData: t
             }))
-        },
-        // themeStyles() {
-        //     return {
-        //         dayCell: {
-        //             backgroundColor: '#cff09e',
-        //         }
-        //     }
-        // }
-    },
+        }
+    }),
+    // computed: {
+    //     ...mapGetters({
+    //         departmentList: 'getDepartmentList',
+    //         branchList: 'getBranchList',
+    //         usersList: 'usersList',
+    //         userData: 'getUserInfo',
+    //         sectionsList: 'sectionsList',
+    //         projectsList: 'projectsList',
+    //         addingError: "getAddingError",
+    //         removeError: "getRemoveError",
+    //         editError: "getEditError",
+    //         saveSuccess: "getSaveDataSucccess",
+    //         removeSuccess: "getRemoveSuccess",
+    //         availStatusList: 'getAvailStatus',
+    //         availTypesList: 'getAvailType',
+    //         newLeave: 'getNewLeaveForUser',
+    //         displayMenu: 'getShowMenu',
+    //         displayOverlay: 'getShowMenuOverlay',
+    //         newProject: 'getNewProjectForUser',
+    //         userProjects: 'userProjectsList',
+    //         userAvail: 'getUserAvail',
+    //         authType: 'getAvailabilityAuth',
+    //         authAcc: 'getAvailAcceptAuth',
+    //         disabledBtnToEditAvail: "getDisabledBtnToEditAvail",
+
+    //     }),
+    //     filteredUsers() {
+    //         let aFilteredUsers = this.usersList,
+    //             selectedDep = this.selectedDepartment,
+    //             selectedBranch = this.selectedBranch;
+    //             aFilteredUsers = aFilteredUsers.filter(function(oData){ 
+    //               return oData.DepartmentId === selectedDep && oData.BranchId === selectedBranch;
+    //             });
+    //           return aFilteredUsers;
+    //     },
+    //     leavesAttr() {
+    //         return this.userAvail.map(t => ({
+    //             key: t.EntryId,
+    //             highlight: {
+    //                 backgroundColor: t.Color,
+    //                 borderRadius: '0px',
+    //                 height: '100%'
+    //             },
+    //             order: t.Order,
+    //             dates: {
+    //                 start: t.DateStart,
+    //                 end: t.DateEnd
+    //             },
+    //             popover: {
+    //                 label: t.TypeName 
+    //             },
+    //             customData: t
+    //         }))
+    //     },
+    //     projectsAttr() {
+    //         return this.userProjects.map(t => ({
+    //             key: t.EntryId,
+    //             highlight: {
+    //                 backgroundColor: t.Color,
+    //                 borderRadius: '0px',
+    //                 height: '100%'
+    //             },
+    //             order: t.Order,
+    //             dates: {
+    //                 start: t.StartDate,
+    //                 end: t.EndDate
+    //             },
+    //             popover: {
+    //                 label: t.ProjectName + ' (' + t.Engag + '%)'
+    //             },
+    //             customData: t
+    //         }))
+    //     }
+    // },
     created() {
       let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getAvailabilityToRead);
-      oStore.dispatch('getData', null);
-      
-    //   filter users to make possibility to edit or accept avails
-    let aFilteredUsers = this.usersList,
-    idTeam = this.userData.DepartmentId;
-    aFilteredUsers = aFilteredUsers.filter(function(oData){ 
-        return oData.DepartmentId === idTeam;
-    });
-    this.$store.commit('SET_FILTERED_TEAM_USERS', aFilteredUsers);   
+      oStore.dispatch('getData', null);  
     },
     watch: {
         selectedType(value) {
-            this.newLeave.TypeId = value
+            this.newLeave.TypeId = value;
         },
         selectedUser(value){
             this.newLeave.UserId = value.UserAlias;
             this.newProject.UserAlias = value.UserAlias;
 
-        // check permission to create project or other avail type
+        // check if button is disabled to create project or other avail type
             if(this.authType === '*') {
-            this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
-            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_PROJECT', false);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_AVAIL', false);
             } else if(this.authType === 'TEAM' && this.filteredUsers.find(o => o.UserAlias === this.selectedUser.UserAlias)) {
-            this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
-            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_PROJECT', false);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_AVAIL', false);
             } else if(this.authType === 'OWN' && this.selectedUser.UserAlias === this.loginAlias) {
-                this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
-            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false); 
+                this.$store.commit('SET_DISABLED_BTN_TO_EDIT_PROJECT', true);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_AVAIL', false); 
             } else {
-            this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
-            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_PROJECT', true);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_AVAIL', true);
             }
-           }
+        },
+        selectedBranch(value) {
+    //   filter users to make possibility to edit or accept avails
+            let aFilteredUsers = this.usersList,
+            idTeam = this.userData.DepartmentId;
+            aFilteredUsers = aFilteredUsers.filter(function(oData){ 
+                return oData.DepartmentId === idTeam;
+            });
+            this.$store.commit('SET_FILTERED_TEAM_USERS', aFilteredUsers); 
+        }
     },
     methods: {
         ...mapActions({
