@@ -23,18 +23,25 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 export default {
-    computed: {
-        ...mapGetters({
+    computed: Object.assign(
+        mapGetters({
             newDelegation: 'getNewDelegation',
             isSuccess: 'getCreateDelegSuccess'
         })
-    },
-    methods: {
-        ...mapActions(['saveDelegationNumber']),
+        // { ...mapGetters({
+        //     newDelegation: 'getNewDelegation',
+        //     isSuccess: 'getCreateDelegSuccess'
+        // })
+    ),
+    methods: Object.assign(
+        mapActions([
+            'saveDelegationNumber'
+        ]), {
+            // { ...mapActions(['saveDelegationNumber']),
         hideDialog() {
             this.$store.commit('SET_SHOW_CONFIRM_DELEG', false)
         }
-    }
+    })
 }
 </script>
 

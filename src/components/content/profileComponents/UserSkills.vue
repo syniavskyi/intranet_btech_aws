@@ -126,8 +126,8 @@ export default {
       bDisabled: true
     };
   },
-  computed: {
-    ...mapGetters({
+  computed: Object.assign(
+    mapGetters({
       userSkills: "getUserSkills",
       modulesList: "getModulesList",
       userLangs: "getUserLanguages",
@@ -135,9 +135,19 @@ export default {
       fullLanguageList: "getFullLanguageList",
       permissionToEdit: "getPermissionToEdit"
     })
-  },
-  methods: {
-    ...mapActions([
+  ),
+  //     {
+  //   ...mapGetters({
+  //     userSkills: "getUserSkills",
+  //     modulesList: "getModulesList",
+  //     userLangs: "getUserLanguages",
+  //     langLevels: "getLangLevels",
+  //     fullLanguageList: "getFullLanguageList",
+  //     permissionToEdit: "getPermissionToEdit"
+  //   })
+  // },
+  methods: Object.assign(
+    mapActions([
       "removeModuleForSkills",
       "removeSkill",
       "addLanguageSkillsRow",
@@ -146,7 +156,9 @@ export default {
       "saveUserLangs",
       "addSkill",
       "removeSkill"
-    ]),
+    ]), {
+      //     { ...mapActions([ "removeModuleForSkills", "removeSkill", "addLanguageSkillsRow", "updateUserLangs", "saveUserSkills", "saveUserLangs",
+      // "addSkill", "removeSkill" ]),
     onHover(el) {
       this.$store.dispatch("onLightUp", el.style ? el : this.$el);
     },
@@ -346,6 +358,6 @@ export default {
       this.removeSkill(data);
       this.checkSingleSkill("AdditionalSkills");
     }
-  }
+  })
 };
 </script>

@@ -255,16 +255,26 @@ export default {
     }
     }
   ),
-  methods: {
-    ...mapActions([
-      "geoLoc",
-      "getWeatherData",
-      "getToday",
-      "getNews",
-      "xmlToJson",
-      "getArticles",
-      "updateAdvert"
-    ]),
+  methods: Object.assign(
+        mapActions([
+          "geoLoc",
+          "getWeatherData",
+          "getToday",
+          "getNews",
+          "xmlToJson",
+          "getArticles",
+          "updateAdvert"
+        ]), {
+    //       {
+    // ...mapActions([
+    //   "geoLoc",
+    //   "getWeatherData",
+    //   "getToday",
+    //   "getNews",
+    //   "xmlToJson",
+    //   "getArticles",
+    //   "updateAdvert"
+    // ]),
     setDateTo(event) {
       if (event.DateTo <= event.DateFrom) {
         return moment(event.DateFrom).format("DD-MM-YYYY");
@@ -370,7 +380,7 @@ export default {
 
       this.$store.dispatch("displayToast");
     }
-  }
+  })
 };
 </script>
 

@@ -83,8 +83,8 @@ export default {
             loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
         }
     },
-    computed: {
-        ...mapGetters({
+    computed: Object.assign(
+        mapGetters({
             userAvail: 'getUserAvail',
             availTypes: 'getAvailType',
             availStatus: 'getAvailStatus',
@@ -93,7 +93,16 @@ export default {
             authAcc: 'getAvailAcceptAuth',
             filteredTeamUsers: 'getFilteredTeamUsers',
             permissionToEditAvail: "getPermissionToEditAvail"
-        }),
+        }), {
+        // { ...mapGetters({
+        //     userAvail: 'getUserAvail',
+        //     availTypes: 'getAvailType',
+        //     availStatus: 'getAvailStatus',
+        //     loginAlias: "getLoginAlias",
+        //     newLeave: "getNewLeaveForUser",
+        //     authAcc: 'getAvailAcceptAuth',
+        //     filteredTeamUsers: 'getFilteredTeamUsers',
+        //     permissionToEditAvail: "getPermissionToEditAvail" }),
         filteredUserAvail() {
             let aFilteredAvail = this.userAvail,
                 sType = this.selectedType,
@@ -154,14 +163,17 @@ export default {
                 }
             }
         }
-    },
+    }),
     watch: {
          userAvail() {
              this.editMode = false;
          }
     },
-    methods: {
-        ...mapActions(["removeUserAvail", "updateUserAvail"]),
+    methods: Object.assign(
+        mapActions([
+            "removeUserAvail", "updateUserAvail"
+        ]), {
+        // { ...mapActions(["removeUserAvail", "updateUserAvail"]),
          edit() {
             this.editMode = true;
             this._beforeEditingCache = utils.createClone(this.userAvail);
@@ -247,7 +259,7 @@ export default {
           let avail = utils.createClone(data);
           this.updateUserAvail(avail);
         }
-    }
+    })
 }
 </script>
 

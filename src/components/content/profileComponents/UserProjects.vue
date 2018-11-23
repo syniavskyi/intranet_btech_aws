@@ -146,8 +146,8 @@ export default {
   mounted() {
     this.setProCheckbox();
   },
-  computed: {
-    ...mapGetters({
+  computed: Object.assign(
+    mapGetters({ 
       showProjectError: "getShowProjectError",
       contractorsList: "getContractorsList",
       industryList: "getIndustryList",
@@ -157,12 +157,27 @@ export default {
       errorProjectNo: "getErrorProjectNo",
       permissionToEdit: "getPermissionToEdit"
     })
-  },
-  methods: {
-    ...mapActions({
-      addRow: "addUserProjectsRow",
-      adjustProjects: "adjustProject"
-    }),
+  ),
+  // {
+  //   ...mapGetters({
+  //     showProjectError: "getShowProjectError",
+  //     contractorsList: "getContractorsList",
+  //     industryList: "getIndustryList",
+  //     modulesList: "getModulesList",
+  //     userProjects: "getUserProjectsList",
+  //     ifModuleExist: "getModuleExist",
+  //     errorProjectNo: "getErrorProjectNo",
+  //     permissionToEdit: "getPermissionToEdit"
+  //   })
+  // },
+  methods: Object.assign(
+    mapActions([
+      "addUserProjectsRow"
+    ]), {
+  // {
+  //   ...mapActions({
+      
+  //   }),
     remove(index) {
       let newData = utils.createClone(this.userProjects[index]);
       newData.Action = 'D';
@@ -366,5 +381,5 @@ export default {
       }
     }
   }
-};
+)};
 </script>

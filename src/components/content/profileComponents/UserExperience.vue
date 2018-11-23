@@ -82,18 +82,31 @@ export default {
       invalidDates: false
     };
   },
-  computed: {
-    ...mapGetters({
-      userExperience: "getUserExperience",
-      workPositions: "getWorkPositions",
-      permissionToEdit: "getPermissionToEdit"
+  computed: Object.assign(
+      mapGetters({
+        userExperience: "getUserExperience",
+        workPositions: "getWorkPositions",
+        permissionToEdit: "getPermissionToEdit"
     })
-  },
+  ),
+  // {
+  //   ...mapGetters({
+  //     userExperience: "getUserExperience",
+  //     workPositions: "getWorkPositions",
+  //     permissionToEdit: "getPermissionToEdit"
+  //   })
+  // },
   mounted() {
     this.setExpCheckbox();
   },
-  methods: {
-    ...mapActions(["addUserExperience", "updateUserExp", "saveNewUserExp"]),
+  methods: Object.assign(
+        mapActions([
+            "addUserExperience", 
+            "updateUserExp", 
+            "saveNewUserExp"
+        ]), {
+  // {
+  //   ...mapActions(["addUserExperience", "updateUserExp", "saveNewUserExp"]),
     edit() {
       this.editMode = true;
       this.onHover(this.$el);
@@ -227,7 +240,7 @@ export default {
       }
     }
   }
-};
+)};
 </script>
 
 <style>

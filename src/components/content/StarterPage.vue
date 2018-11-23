@@ -102,8 +102,8 @@ export default {
     this.getNewDocs();
     this.getInfoDocs();
   },
-  computed: {
-    ...mapGetters({
+  computed: Object.assign(
+    mapGetters({
       setButtonNew: "getButtonStateNew",
       setButtonInfo: "getButtonStateInfo",
       docListNew: "getDocListNew",
@@ -112,9 +112,20 @@ export default {
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay"
     })
-  },
-  methods: {
-    ...mapActions([
+  ), 
+  // {
+  //   ...mapGetters({
+  //     setButtonNew: "getButtonStateNew",
+  //     setButtonInfo: "getButtonStateInfo",
+  //     docListNew: "getDocListNew",
+  //     listForStatus: "getListForStatus",
+  //     docListInfo: "getDocListInfo",
+  //     displayMenu: "getShowMenu",
+  //     displayOverlay: "getShowMenuOverlay"
+  //   })
+  // },
+  methods: Object.assign(
+    mapActions([
       "getNewDocs",
       "getInfoDocs",
       "getDocsStatus",
@@ -124,7 +135,19 @@ export default {
       "editSingleNewDoc",
       "deleteNewFile",
       "deleteInfoFile"
-    ]),
+    ]), {
+  // {
+  //   ...mapActions([
+  //     "getNewDocs",
+  //     "getInfoDocs",
+  //     "getDocsStatus",
+  //     "checkListForNew",
+  //     "checkListForInfo",
+  //     "checkFileFormat",
+  //     "editSingleNewDoc",
+  //     "deleteNewFile",
+  //     "deleteInfoFile"
+  //   ]),
     // add css to checkbox
     changeCheckboxForNew(data) {
       if (data.Status === undefined) {
@@ -169,7 +192,7 @@ export default {
       this.$store.commit('SET_BUTTON_STATE_INFO', true);
     }
   }
-};
+)};
 </script>
 
 <style scoped>

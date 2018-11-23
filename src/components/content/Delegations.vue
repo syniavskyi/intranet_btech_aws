@@ -250,12 +250,18 @@ export default {
             }
         }
     ),
-    methods: {
-        ...mapActions({
-            checkNewDelegation: 'checkNewDelegation',
-            countAllowance: 'countAllowance',
-            countAllCosts: 'countAllCosts'
-        }),
+    methods:  Object.assign(
+        mapActions([
+            'checkNewDelegation',
+            'countAllowance',
+            'countAllCosts'
+        ]), {
+        // {
+        // ...mapActions({
+        //     checkNewDelegation: 'checkNewDelegation',
+        //     countAllowance: 'countAllowance',
+        //     countAllCosts: 'countAllCosts'
+        // }),
         setDelegationNo(){
             if (this.newDelegation.dates && this.delegationUsername) {
                 const data = {
@@ -330,7 +336,7 @@ export default {
         setCurrency(e) {
             let el = this.$el
         }
-    }
+    })
 }
 </script>
 

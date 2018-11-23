@@ -102,12 +102,13 @@
 import { mapGetters } from 'vuex'
 const utils = require("../utils")
 export default {
-    computed: {
-       ...mapGetters({
-        userPhotoUrl: 'getUserPhotoUrl',
-        menuAuth: 'getMenuAuth'
-      })
-    },
+    computed: Object.assign(
+        mapGetters({
+            userPhotoUrl: 'getUserPhotoUrl',
+            menuAuth: 'getMenuAuth'
+        })
+    ),
+    // { ...mapGetters({ userPhotoUrl: 'getUserPhotoUrl', menuAuth: 'getMenuAuth' }) },
     methods: {
         logout() {
             this.$store.dispatch('logout')

@@ -123,18 +123,38 @@ export default {
   mounted: function() {
     this.setEduCheckbox();
   },
-  computed: {
-    ...mapGetters({
-      userEducation: "getUserEducation",
-      studyTypes: "getStudyTypes",
-      academicTitles: "getAcademicTitles",
-      schoolDescList: "getSchoolDescList",
-      fieldOfStudyDescList: "getFieldOfStudyDescList",
-      permissionToEdit: "getPermissionToEdit"
-    }),
-  },
-  methods: {
-    ...mapActions(["addUserEduRow", "editUserEducation", "addUserEducation"]),
+  computed: Object.assign(
+      mapGetters({
+        userEducation: "getUserEducation",
+        studyTypes: "getStudyTypes",
+        academicTitles: "getAcademicTitles",
+        schoolDescList: "getSchoolDescList",
+        fieldOfStudyDescList: "getFieldOfStudyDescList",
+        permissionToEdit: "getPermissionToEdit"
+    })
+  ),
+  // {
+  //   ...mapGetters({
+  //     userEducation: "getUserEducation",
+  //     studyTypes: "getStudyTypes",
+  //     academicTitles: "getAcademicTitles",
+  //     schoolDescList: "getSchoolDescList",
+  //     fieldOfStudyDescList: "getFieldOfStudyDescList",
+  //     permissionToEdit: "getPermissionToEdit"
+  //   }),
+  // },
+  methods: Object.assign(
+      mapActions([
+        "addUserEduRow", 
+        "editUserEducation", 
+        "addUserEducation"
+      ]), {
+  // {
+  //   ...mapActions([
+  //   "addUserEduRow", 
+  //   "editUserEducation", 
+  //   "addUserEducation"
+  // ]),
     edit() {
       this.editMode = true;
       this.onHover(this.$el);
@@ -284,7 +304,7 @@ export default {
       }
     }
   }
-};
+)};
 </script>
 
 <style>

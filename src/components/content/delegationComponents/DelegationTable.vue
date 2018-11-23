@@ -209,14 +209,22 @@ import VueGoogleAutocomplete from "vue-google-autocomplete";
 import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 export default {
-  computed: {
-    ...mapGetters({
-      departmentList: "getDepartmentList",
-      customCosts: "getDelegationCostsList",
-      defaultCostsData: "getDefaultCostsData",
-      currencyList: "getCurrencyList",
-      newDelegation: "getNewDelegation"
-    }),
+  computed: Object.assign(
+    mapGetters({
+        departmentList: "getDepartmentList",
+        customCosts: "getDelegationCostsList",
+        defaultCostsData: "getDefaultCostsData",
+        currencyList: "getCurrencyList",
+        newDelegation: "getNewDelegation"
+    }),{
+    // {
+    // ...mapGetters({
+    //   departmentList: "getDepartmentList",
+    //   customCosts: "getDelegationCostsList",
+    //   defaultCostsData: "getDefaultCostsData",
+    //   currencyList: "getCurrencyList",
+    //   newDelegation: "getNewDelegation"
+    // }),
     delegationStartDate() {
       if (this.newDelegation.dates) {
         return moment(this.newDelegation.dates.start).format("DD.MM.YYYY");
@@ -231,7 +239,7 @@ export default {
         return null;
       }
     }
-  },
+  }),
   updated() {
     this.$nextTick(() => {
       this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(
@@ -249,13 +257,19 @@ export default {
     });
   },
   components: { VueGoogleAutocomplete },
-  methods: {
-    ...mapActions({
-      addRow: "addDelegationRow",
-      removeRow: "removeDelegationRow",
-      checkDelegationTable: "checkDelegationTable",
-      countAllowance: "countAllowance"
-    }),
+  methods: Object.assign(
+    mapActions({
+        addRow: "addDelegationRow",
+        removeRow: "removeDelegationRow",
+        checkDelegationTable: "checkDelegationTable",
+        countAllowance: "countAllowance"
+    }),{
+    // { ...mapActions({
+    //   addRow: "addDelegationRow",
+    //   removeRow: "removeDelegationRow",
+    //   checkDelegationTable: "checkDelegationTable",
+    //   countAllowance: "countAllowance"
+    // }),
     /* Adding and hiding overflow of tile content to display datepicker  */
     setOverflow() {
         this.$store.dispatch("setVisibleOverflow", this.$el)
@@ -290,7 +304,7 @@ export default {
       const name = { el };
       this.$store.dispatch("checkWidthAndToggle", name);
     }
-  },
+  }),
   beforeDestroy() {
     window.removeEventListener("resize", this.getWindowWidth);
   }

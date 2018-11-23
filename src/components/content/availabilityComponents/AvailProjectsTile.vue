@@ -78,14 +78,17 @@ export default {
             this.newProjectForUser.EndDate = utils.formatDateForBackend(value.end)
         }
     },
-    computed: {
-        ...mapGetters({
+    computed: Object.assign(
+        mapGetters({
             newProjectForUser: 'getNewProjectForUser',
             projectsList: 'projectsList',
             contractorsList: 'getContractorsList',
             availStatusList: 'getAvailStatus',
             usersList: 'usersList'
-        }),
+        }), {
+//   { ...mapGetters({ newProjectForUser: 'getNewProjectForUser', projectsList: 'projectsList',
+//             contractorsList: 'getContractorsList', availStatusList: 'getAvailStatus', usersList: 'usersList'
+//         }),
         filteredProjects() {
             const projectsList = this.projectsList
             let filteredProjects = []
@@ -105,11 +108,12 @@ export default {
                 }
             }
         }
-    },
-    methods: {
-        ...mapActions({
+    }),
+    methods: Object.assign(
+        mapActions({
             validateNewProject: 'validateNewProject'
-        }),
+        }),{
+        // { ...mapActions({ validateNewProject: 'validateNewProject' }),
         addNewProjectForUser(){
             this.$store.dispatch('addUserProject')
             this.selectedDates = null
@@ -160,6 +164,6 @@ export default {
             if (project.Engag > 100) project.Engag = 100;
         },
     }
-};
+)};
 </script>
 

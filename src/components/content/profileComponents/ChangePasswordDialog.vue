@@ -38,11 +38,12 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    ...mapGetters({
-      userData: "getUserInfo"
+  computed: Object.assign(
+    mapGetters({
+        userData: 'getUserInfo'
     })
-  },
+  ),
+//   { ...mapGetters({ userData: "getUserInfo" }) },
   methods: {
     close(evt) {
         let el = evt.target.parentElement.parentElement;

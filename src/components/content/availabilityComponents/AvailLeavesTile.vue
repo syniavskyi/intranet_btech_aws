@@ -58,15 +58,22 @@ export default {
             loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
         }
     },
-    computed: {
-        ...mapGetters({
+    computed: Object.assign(
+        mapGetters({
             newLeave: 'getNewLeaveForUser',
             availStatusList: 'getAvailStatus',
             usersList: 'usersList',
             availTypesList: 'getAvailType',
             filteredTeamUsers: 'getFilteredTeamUsers',
             permissionToEditAvail: "getPermissionToEditAvail"
-        }),
+        }), {
+            // { ...mapGetters({
+            // newLeave: 'getNewLeaveForUser',
+            // availStatusList: 'getAvailStatus',
+            // usersList: 'usersList',
+            // availTypesList: 'getAvailType',
+            // filteredTeamUsers: 'getFilteredTeamUsers',
+            // permissionToEditAvail: "getPermissionToEditAvail" }),
         formattedUsername() {
             const userId = this.selectedUser
             for (let i = 0; i < this.usersList.length; i++){
@@ -83,7 +90,7 @@ export default {
                 }
             }
         }
-    },
+    }),
     watch: {
         selectedDates(value){
             this.newLeave.DateStart = utils.formatDateForBackend(value.start);
@@ -98,8 +105,11 @@ export default {
             }
         }
     },
-    methods: {
-        ...mapActions({addNewLeave: 'addUserLeave'}),
+    methods: Object.assign(
+        mapActions({
+            addNewLeave: 'addUserLeave'
+        }),{
+        // { ...mapActions({addNewLeave: 'addUserLeave'}),
         checkFields() {
             let obj = this.newLeave;
             if(this.permissionToEditAvail===false) {
@@ -118,6 +128,6 @@ export default {
             }
         },
         
-    }
+    })
 };
 </script>

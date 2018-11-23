@@ -99,26 +99,41 @@ export default {
       
     };
   },
-  computed: {
-    ...mapGetters({
-      cvElements: "getCvElements",
-      languageList: "getLanguageList",
-      industryList: "getIndustryList",
-      getSelectedCvLang: "getSelectedCvLang",
-      userData: "getUserInfo"
-      // userPositions: "getUserJobPositions"
+  computed: Object.assign(
+      mapGetters({
+        cvElements: "getCvElements",
+        languageList: "getLanguageList",
+        industryList: "getIndustryList",
+        getSelectedCvLang: "getSelectedCvLang",
+        userData: "getUserInfo"
     })
-  },
-
-
-  methods: {
-    ...mapActions([
-      "selectAllCvElements",
-      "deselectAllCvElements",
-      "getDomainValues",
-      "getIndustryList",
-      "getUserData"
-    ]),
+  ),
+  // {
+  //   ...mapGetters({
+  //     cvElements: "getCvElements",
+  //     languageList: "getLanguageList",
+  //     industryList: "getIndustryList",
+  //     getSelectedCvLang: "getSelectedCvLang",
+  //     userData: "getUserInfo"
+  //     // userPositions: "getUserJobPositions"
+  //   })
+  // },
+  methods: Object.assign(
+      mapActions([
+        "selectAllCvElements",
+        "deselectAllCvElements",
+        "getDomainValues",
+        "getIndustryList",
+        "getUserData"
+      ]), {
+  // {
+  //   ...mapActions([
+  //     "selectAllCvElements",
+  //     "deselectAllCvElements",
+  //     "getDomainValues",
+  //     "getIndustryList",
+  //     "getUserData"
+  //   ]),
     close() {
       this.$store.commit("SET_SHOW_CV_DIALOG", false);
     },
@@ -133,7 +148,7 @@ export default {
       this.$router.push({ name: "CV" });
     }
   }
-};
+ )};
 </script>
 
 <style>

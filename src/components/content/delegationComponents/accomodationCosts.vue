@@ -135,16 +135,21 @@ export default {
            
         }
     },
-    computed: {
-        ...mapGetters({
-            currencyList: 'getCurrencyList',
-            accomodationCosts: 'getAccomodationCostData',
-            totalCosts: 'getTotalCosts',
-            newDelegation: 'getNewDelegation',
-            totalCostsInCurr: 'getTotalCostsInCurr'
-           
-        })
-    },
+    computed: Object.assign(
+    mapGetters({
+        currencyList: 'getCurrencyList',
+        accomodationCosts: 'getAccomodationCostData',
+        totalCosts: 'getTotalCosts',
+        newDelegation: 'getNewDelegation',
+        totalCostsInCurr: 'getTotalCostsInCurr'
+    }),{
+    //     { ...mapGetters({
+    //         currencyList: 'getCurrencyList',
+    //         accomodationCosts: 'getAccomodationCostData',
+    //         totalCosts: 'getTotalCosts',
+    //         newDelegation: 'getNewDelegation',
+    //         totalCostsInCurr: 'getTotalCostsInCurr' })
+    // },
     updated() {
         this.$nextTick(() => {this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
                     this.$el.lastChild.style.height = height
@@ -157,16 +162,22 @@ export default {
             this.getWindowWidth()
         })
     },
-    methods: {
-        ...mapActions({
+    methods: Object.assign(
+        mapActions({
             checkAccomodationFields: 'checkAccomodationFields',
             addCostRow: 'addAccCostRow',
             removeCostRow: 'removeAccCostRow',
             countAccFlatRate: 'countAccFlatRate',
             getAccCostRate: 'getAccCostRate',
             updateAccCosts: 'countAccomodationCosts'
-
-        }),
+        }),{
+        // { ...mapActions({
+        //     checkAccomodationFields: 'checkAccomodationFields',
+        //     addCostRow: 'addAccCostRow',
+        //     removeCostRow: 'removeAccCostRow',
+        //     countAccFlatRate: 'countAccFlatRate',
+        //     getAccCostRate: 'getAccCostRate',
+        //     updateAccCosts: 'countAccomodationCosts' }),
         hideAccFields: cost => { return (cost.flatRate == false) ? false : true }, 
         /* Adding and hiding overflow of tile content to display datepicker  */
         setOverflow() {
@@ -206,10 +217,10 @@ export default {
             const name = {el}
             this.$store.dispatch('checkWidthAndToggle', name)
         }
-    },
+    }),
 
     beforeDestroy() {
         window.removeEventListener('resize', this.getWindowWidth)
     }
-}
+})}
 </script>

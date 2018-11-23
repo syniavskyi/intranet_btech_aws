@@ -59,15 +59,24 @@ export default {
       disableFileOptions: null
     };
   },
-  computed: {
-    ...mapGetters({
-      cvLanguageList: "getCvLanguageList",
-      fileUploadError: "isFileUploadError",
-      showSelectCv: "getShowSelectCvDialog",
-      formats: "getCvFormats",
-      userFilesList: "getUserFiles"
+  computed: Object.assign(
+      mapGetters({
+        cvLanguageList: "getCvLanguageList",
+        fileUploadError: "isFileUploadError",
+        showSelectCv: "getShowSelectCvDialog",
+        formats: "getCvFormats",
+        userFilesList: "getUserFiles"
     })
-  },
+  ),
+  // {
+  //   ...mapGetters({
+  //     cvLanguageList: "getCvLanguageList",
+  //     fileUploadError: "isFileUploadError",
+  //     showSelectCv: "getShowSelectCvDialog",
+  //     formats: "getCvFormats",
+  //     userFilesList: "getUserFiles"
+  //   })
+  // },
   methods: {
     showSelectDialog() {
       this.$store.commit("SET_SHOW_CV_DIALOG", true);

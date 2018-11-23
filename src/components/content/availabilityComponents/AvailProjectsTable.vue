@@ -95,14 +95,20 @@ export default {
             _beforeEditingCache: null     
         }
     },
-    computed: {
-        ...mapGetters({
+    computed: Object.assign(
+        mapGetters({
             userProjects: 'userProjectsList',
             availTypes: 'getAvailType',
             availStatus: 'getAvailStatus',
             allProjects: 'projectsList',
             permissionToEditProject: "getPermissionToEditProject"
-        }),
+        }), {
+            // { ...mapGetters({
+            // userProjects: 'userProjectsList',
+            // availTypes: 'getAvailType',
+            // availStatus: 'getAvailStatus',
+            // allProjects: 'projectsList',
+            // permissionToEditProject: "getPermissionToEditProject" }),
         noAvailEntries() {
             if (this.filteredUserProjects.length === 0) {
                 return true
@@ -124,10 +130,13 @@ export default {
             }
             
         }
-    },
-    methods: {
-        ...mapActions(["updateUserProject", "removeUserProject"]),
-         edit() {
+    }),
+    methods: Object.assign(
+        mapActions([
+            "updateUserProject", "removeUserProject"
+        ]), {
+        // { ...mapActions(["updateUserProject", "removeUserProject"]),
+        edit() {
             this.editMode = true;
             this._beforeEditingCache = utils.createClone(this.userProjects);
         },
@@ -211,7 +220,7 @@ export default {
             }    
         },
 
-    }
+    })
 }
 </script>
 

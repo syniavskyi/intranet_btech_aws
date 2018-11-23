@@ -38,10 +38,11 @@ export default {
             }
         } 
     },
-    methods: {
-      ...mapActions([
-      "addNewAdvert"
-        ]),
+    methods: Object.assign(
+        mapActions([
+            "addNewAdvert"
+        ]), {
+            // { ...mapActions([ "addNewAdvert" ]),
         close() {
             this.$store.commit("SET_SHOW_NEW_MESSAGE_DIALOG", false)
         },
@@ -50,7 +51,7 @@ export default {
         ? moment(date).format("DD.MM.YYYY")
         : "-";
         }
-    }
+    })
 }
 </script>
 

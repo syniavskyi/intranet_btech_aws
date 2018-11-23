@@ -322,13 +322,18 @@ export default {
             this.$store.commit('SET_FILTERED_TEAM_USERS', aFilteredUsers); 
         }
     },
-    methods: {
-        ...mapActions({
+    methods: Object.assign(
+        mapActions({
             validateEditProject: 'validateEditProject',
             closeAlert: 'hideAllMessages',
             validateNewEngag: 'validateNewEngag',
             validateEditEngag: 'validateEditEngag'
-        }),
+        }),{
+            // { ...mapActions({
+            // validateEditProject: 'validateEditProject',
+            // closeAlert: 'hideAllMessages',
+            // validateNewEngag: 'validateNewEngag',
+            // validateEditEngag: 'validateEditEngag' }),
         showMenu(event) {
             let obj = {window, event}
             this.$store.dispatch("setSideMenu", obj);
@@ -338,7 +343,7 @@ export default {
             this.$store.dispatch('getUserProjects', userId)
             this.$store.dispatch('getUserAvail', userId)
         }
-    }
+    })
 }
 </script>
 <style>

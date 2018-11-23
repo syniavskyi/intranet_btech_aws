@@ -3,7 +3,7 @@
         <div  class="delegations-tile-header">
             <div v-on:click.self="toggleTile" class="delegations-tile-title">
                 {{ $t("header.travelCosts") }}
-                <button class="del-add-row"  @click="addCostRow"> {{ $t("button.addRow") }} </button>
+                <button class="del-add-row"  @click="addTravelCostRow"> {{ $t("button.addRow") }} </button>
             </div>
             <div class="delegations-tile-underscore"></div>
         </div>
@@ -57,7 +57,7 @@
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.return") }}?</div>
                             <div class="del-tbody2-item-txt">
                                 <label class="checkbox-wrap">
-                                    <input type="checkbox" class="checkbox-new" @change="updateTravelCosts" v-model="cost.payback" />
+                                    <input type="checkbox" class="checkbox-new" @change="countTravelCosts" v-model="cost.payback" />
                                     <div class="checkbox-in"></div>
                                 </label>
                             </div>
@@ -88,7 +88,7 @@
                                 </select>
                             <!-- </div>
                             <div class="del-tbody2-item-txt"> -->
-                                <select :disabled="disableEngineCapacity(cost)" :class="[{ 'delegations-tselect-m-disabled': disableEngineCapacity(cost) },  'delegations-tselect-m']" v-model="cost.engineCapacity" @change="updateTravelCosts">
+                                <select :disabled="disableEngineCapacity(cost)" :class="[{ 'delegations-tselect-m-disabled': disableEngineCapacity(cost) },  'delegations-tselect-m']" v-model="cost.engineCapacity" @change="countTravelCosts">
                                     <option disabled selected value></option>
                                     <!-- true is for more than 900 cm, false for less -->
                                     <option key="false" :value="false">{{ $t("label.capacityLess") }}<sup>3</sup></option>
@@ -101,7 +101,7 @@
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.kilometers") }}?</div>
                             <div class="del-tbody2-item-txt">
                                 <div class="del-tbody-item-wrap">
-                                    <input :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="updateTravelCosts" v-model="cost.kilometers" />
+                                    <input :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="countTravelCosts" v-model="cost.kilometers" />
                                     <span class="delegations-div-bar"></span>
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }}</div>
                             <div class="del-tbody2-item-txt">
                                 <div class="del-tbody-item-wrap">
-                                    <input :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tinput-s-disabled': disableCostAmount(cost) },  'delegations-tinput-s']" type="number" min="0" @input="updateTravelCosts" v-model="cost.amount" />
+                                    <input :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tinput-s-disabled': disableCostAmount(cost) },  'delegations-tinput-s']" type="number" min="0" @input="countTravelCosts" v-model="cost.amount" />
                                     <span class="delegations-div-bar"></span>
                                 </div>
                             </div>
@@ -138,7 +138,7 @@
                         <div class="del-tbody2-item-travel-s">
                             <div class="del-tbody2-item-title"></div>
                             <div class="del-tbody2-item-txt">
-                                <button class="del-delete-row" @click="removeCostRow(index)">{{ $t("button.delete") }}</button>
+                                <button class="del-delete-row" @click="removeTravelCostRow(index)">{{ $t("button.delete") }}</button>
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>
@@ -177,8 +177,8 @@ export default {
             hideAmount: false
         }
     },
-    computed: {
-        ...mapGetters({
+    computed: Object.assign(
+        mapGetters({
             currencyList: 'getCurrencyList',
             travelCosts: 'getTravelCostData',
             totalCosts: 'getTotalCosts',
@@ -186,7 +186,9 @@ export default {
             transportList: "getTransportList",
             newDelegation: "getNewDelegation"
         })
-    },
+    ),
+    // { ...mapGetters({ currencyList: 'getCurrencyList', travelCosts: 'getTravelCostData', totalCosts: 'getTotalCosts',
+    // totalCostsInCurr: 'getTotalCostsInCurr', transportList: "getTransportList", newDelegation: "getNewDelegation" }) },
     updated() {
         this.$nextTick(() => {this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
                     this.$el.lastChild.style.height = height
@@ -199,14 +201,16 @@ export default {
             this.getWindowWidth()
         })
     },
-    methods: {
-        ...mapActions({
-            checkTravelFields: 'checkTravelFields',
-            addCostRow: 'addTravelCostRow',
-            removeCostRow: 'removeTravelCostRow',
-            updateTravelCosts: 'countTravelCosts',
-            getTravelRate: 'getTravelRate'
-        }),
+    methods: Object.assign(
+        mapActions([
+            'checkTravelFields',
+            'addTravelCostRow',
+            'removeTravelCostRow',
+            'countTravelCosts',
+            'getTravelRate'
+        ]), {
+        //   { ...mapActions({ checkTravelFields: 'checkTravelFields', addTravelCostRow: 'addTravelCostRow',
+        //     removeTravelCostRow: 'removeTravelCostRow', countTravelCosts: 'countTravelCosts', getTravelRate: 'getTravelRate' }),
         setFieldsValues(cost) {
             // type false  = not flat rate (kilometrówka), type  true = flat rate (ryczałt)
             cost.flatRate = null
@@ -267,13 +271,13 @@ export default {
             return height
         },
 
-        addCostRow() {
+        addTravelCostRow() {
             let el = this.$el.lastChild.style.height
             !el || el ? el = "auto" : ""
             this.$store.dispatch('addTravelCostRow')    
         },
 
-        removeCostRow() {
+        removeTravelCostRow() {
             this.$el.lastChild.style.height = "auto"
             this.$store.dispatch('removeTravelCostRow')
         },
@@ -284,7 +288,7 @@ export default {
             const name = {el}
             this.$store.dispatch('checkWidthAndToggle', name)
         }
-    },
+    }),
 
     beforeDestroy() {
         window.removeEventListener('resize', this.getWindowWidth)

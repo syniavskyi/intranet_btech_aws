@@ -84,15 +84,22 @@ export default {
 
         }
     },
-    computed: {
-        ...mapGetters({
-            currencyList: 'getCurrencyList',
-            advanceData: 'getAdvanceData',
-            totalCosts: 'getTotalCosts',
-            totalCostsInCurr: "getTotalCostsInCurr",
-            newDelegation: 'getNewDelegation'
-        })
-    },
+    computed: Object.assign(
+    mapGetters({
+        currencyList: 'getCurrencyList',
+        advanceData: 'getAdvanceData',
+        totalCosts: 'getTotalCosts',
+        totalCostsInCurr: "getTotalCostsInCurr",
+        newDelegation: 'getNewDelegation'
+    }),{
+    // { ...mapGetters({
+    //         currencyList: 'getCurrencyList',
+    //         advanceData: 'getAdvanceData',
+    //         totalCosts: 'getTotalCosts',
+    //         totalCostsInCurr: "getTotalCostsInCurr",
+    //         newDelegation: 'getNewDelegation'
+    //     })
+    // },
     updated() {
         this.$nextTick(() => {this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
                     this.$el.lastChild.style.height = height
@@ -105,13 +112,20 @@ export default {
             this.getWindowWidth()
         })
     },
-    methods: {
-        ...mapActions([
+    methods: Object.assign(
+        mapActions([
             'checkAdvanceFields',
             'updateAdvance',
             'removeAdvanceRow',
             'getAdvanceRate'
-        ]),
+        ]),{
+        // {
+        // ...mapActions([
+        //     'checkAdvanceFields',
+        //     'updateAdvance',
+        //     'removeAdvanceRow',
+        //     'getAdvanceRate'
+        // ]),
         /* Adding and hiding overflow of tile content to display datepicker  */
         setOverflow() {
             this.$store.dispatch("setVisibleOverflow", this.$el)
@@ -148,10 +162,10 @@ export default {
             const name = {el}
             this.$store.dispatch('checkWidthAndToggle', name)
         }
-    },
+    }),
 
     beforeDestroy() {
         window.removeEventListener('resize', this.getWindowWidth)
     }
-}
+})}
 </script>
