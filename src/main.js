@@ -51,7 +51,7 @@ Vue.config.productionTip = false
 axios.defaults.baseURL = '/api/sap/opu/odata/sap/ZGW_INTRANET_SRV/';
 
 odata().config({
-    endpoint: 'http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/',
+    endpoint: 'https://46.229.158.46:1443/sap/opu/odata/sap/ZGW_INTRANET_SRV/',
     headers: [
     {name:"X-Requested-With", value: "XMLHttpRequest"},
     // {name:"Content-Type", value : "application/json"},
