@@ -5,7 +5,8 @@
     "author": "syniavskyi <syniavskyi.pavlo@gmail.com>",
     "private": true,
     "scripts": {
-        "start": "node build/dev-server.js",
+        "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+        "start": "npm run dev",
         "build": "node build/build.js"
     },
     "dependencies": {
