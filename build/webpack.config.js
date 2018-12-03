@@ -1,7 +1,7 @@
 'use strict'
 const path = require('path')
 const utils = require('./utils')
-const config = require('../config')
+// const config = require('../config')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 // const vueLoaderConfig = require('./vue-loader.conf')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -13,15 +13,12 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-// console.log(path.join(__dirname, '..', 'src', 'main.js'));
-
 module.exports = {
   mode: process.env.NODE_ENV,
   context: path.resolve(__dirname, '../'),
-  entry: path.resolve(__dirname, 'src/main.js'),
+  entry: path.join(__dirname, 'src', 'main.js'),
   // entry: {
-  //   app: path.join(__dirname, '../src/', 'main.js')
-  //   // app: './src/main.js'
+  //   app: './src/main.js'
   // },
   output: {
     path: path.resolve(__dirname, 'dist'),

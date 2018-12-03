@@ -1,7 +1,7 @@
 'use strict'
 const path = require('path')
-const utils = require('./utils')
-const config = require('../config')
+const utils = require('./build/utils')
+// const config = require('../config')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 // const vueLoaderConfig = require('./vue-loader.conf')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -13,19 +13,17 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-// console.log(path.join(__dirname, '..', 'src', 'main.js'));
-
 module.exports = {
   mode: process.env.NODE_ENV,
-  context: path.resolve(__dirname, '../'),
-  entry: path.resolve(__dirname, 'src/main.js'),
+  // context: path.resolve(__dirname, '../'),
+  entry: path.join(__dirname, 'src', 'main.js'),
   // entry: {
-  //   app: path.join(__dirname, '../src/', 'main.js')
-  //   // app: './src/main.js'
+  //   app: './src/main.js'
   // },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js'
+    path: path.join(__dirname, '/dist/'),
+    filename: '[name].js',
+    publicPath: '/'
   },
   // output: {
   //   path: config.build.assetsRoot,
@@ -58,10 +56,11 @@ module.exports = {
     }
   },
   resolve: {
+    modules: ['./', 'node_modules'],
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      '@': path.resolve(__dirname, 'src')
     }
   },
   plugins: [
@@ -74,7 +73,7 @@ module.exports = {
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: path.join(__dirname, 'dist', 'index.html'),
-      template: path.join(__dirname, 'static', 'index.html'),
+      // template: path.join(__dirname, 'static', 'index.html'),
       inject: true,
     })
   ],
@@ -124,14 +123,18 @@ module.exports = {
         }
       },
       {
+        test: /\.less$/,
+        loader: 'less-loader'
+      },
+      {
         test: /\.(sa|sc|c)ss$/,
         use: [
           devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-          'vue-style-loader',
+          // 'vue-style-loader',
           'css-loader',
-          'less-loader',
+          // 'less-loader',
           'postcss-loader',
-          'sass-loader',
+          // 'sass-loader',
         ],
       }
     ]
